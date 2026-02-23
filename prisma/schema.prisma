@@ -12,3 +12,57 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String      @id @default(uuid())
+  name        String
+  email       String      @unique
+  password    String
+  urls        Url[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([email]) 
+}
+
+model Url {
+  id          String      @id @default(uuid())
+  userId      String?
+  code        String      @unique
+  originalUrl String
+  isActive    Boolean     @default(true)
+  expiresAt   DateTime?
+  clickCount  Int         @default(0)
+  user        User?       @relation(fields: [userId], references: [id])
+  clicks      Click[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([code])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Click {
+  id          String      @id @default(uuid())
+  urlId       String
+  ip          String?
+  userAgent   String?
+  country     String?
+  referer     String?
+  createdAt   DateTime    @default(now())
+
+  url         Url         @relation(fields: [urlId], references: [id])
+
+  @@index([urlId])
+  @@index([createdAt])
+}
+
+model IpRateLimit {
+  id          String      @id @default(uuid())
+  ip          String
+  count       Int
+  lastHit     DateTime
+
+  @@unique([ip])
+}
