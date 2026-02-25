@@ -19,12 +19,10 @@ const registerUserService = async ({name, email, password}) => {
     });
 
     return {
-        data: {
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-            },
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
         },
     };
 };
@@ -45,14 +43,12 @@ const loginUserService = async ({email, password}) => {
     const token = generateToken({id: user.id});
 
     return {
-        data: {
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-            },
-            token,
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
         },
+        token,
     };
 };
 
