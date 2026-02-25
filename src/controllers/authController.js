@@ -50,11 +50,10 @@ const loginUserController = async (req, res, next) => {
 
 const logoutUserController = async (req, res, next) => {
     try {
-        res.cookie("jwt", "", {
+        res.clearCookie("jwt", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: new Date(0),
         });
 
         return res.status(200).json({
