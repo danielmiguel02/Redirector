@@ -48,7 +48,6 @@ const loginUserService = async ({email, password}) => {
             name: user.name,
             email: user.email,
         },
-        token,
     };
 };
 
