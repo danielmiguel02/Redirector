@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB, disconnectDB } from './config/db.js';
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 // Import Routes
 import authRoutes from './routes/authRoutes.js';
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use("/auth", authRoutes);
+
+// Error Middleware
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5001;
 const server = app.listen(PORT, () => {
