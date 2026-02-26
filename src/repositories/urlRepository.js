@@ -2,14 +2,13 @@ import { prisma } from '../config/db.js';
 import { ApiError } from '../utils/ApiError.js';
 
 const createUrlRepository = async (data) => {
-    const {userId, code, originalUrl, expiresAt, clickCount} = data;
+    const {userId, code, originalUrl, expiresAt} = data;
     try {
         return await prisma.url.create({
             data: {
                 code: code,
                 originalUrl: originalUrl,
                 expiresAt: expiresAt,
-                clickCount: clickCount,
                 user: userId ? { connect: { id: userId } } : undefined
             },
         });
