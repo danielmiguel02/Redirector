@@ -6,11 +6,11 @@ const createUrlRepository = async (data) => {
     try {
         return await prisma.url.create({
             data: {
-                userId: userId,
                 code: code,
                 originalUrl: originalUrl,
                 expiresAt: expiresAt,
-                clickCount: clickCount
+                clickCount: clickCount,
+                user: userId ? { connect: { id: userId } } : undefined
             },
         });
 

@@ -10,11 +10,11 @@ const createUrlService = async ({ url, userId }) => {
 
         try {
             const createdUrl = await createUrlRepository({
-                userId: userId ?? null,
                 code: code,
                 originalUrl: url,
                 expiresAt: userId ? null : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                 clickCount: userId ? 0 : null,
+                user: userId ? { connect: { id: userId } } : undefined,
             });
 
             return {
