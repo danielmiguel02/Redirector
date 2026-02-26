@@ -5,6 +5,7 @@ import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 // Import Routes
 import authRoutes from './routes/authRoutes.js';
+import urlRoutes from './routes/urlRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use("/auth", authRoutes);
+app.use("/url", urlRoutes);
 
 // Error Middleware
 app.use(errorMiddleware);
