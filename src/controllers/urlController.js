@@ -5,7 +5,10 @@ const createUrlController = async (req, res, next) => {
     try {
         const { url } = createUrlSchema.parse(req.body);
 
-        const result = await createUrlService(url);
+        const result = await createUrlService({
+            url,
+            userId: req.user?.id ?? null,
+        });
 
         return res.status(201).json({
             message: "Url created successfully",
