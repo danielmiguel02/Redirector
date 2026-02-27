@@ -2,11 +2,15 @@ import { verifyToken } from '../utils/verifyToken.js';
 import { prisma } from '../config/db.js';
 
 export const authMiddleware = async (req, res, next) => {
-  const token = req.cookies?.jwt;
+  let token = req.cookies?.jwt;
 
   // If no token, just continue as guest
+  if (!token && req.headers.authorization?.statsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
   if (!token) {
-    req.user = null; // explicitly mark as guest
+    req.user = null;
     return next();
   }
 
