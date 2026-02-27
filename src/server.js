@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { connectDB, disconnectDB } from './config/db.js';
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
@@ -15,6 +16,7 @@ const app = express();
 // Body parse middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // API Routes
 app.use("/auth", authRoutes);
