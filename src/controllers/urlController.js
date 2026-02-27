@@ -7,7 +7,7 @@ const createUrlController = async (req, res, next) => {
 
         const result = await createUrlService({
             url,
-            userId: req.user?.id ?? null,
+            userId: req.user?.id,
         });
 
         return res.status(201).json({
