@@ -36,10 +36,7 @@ const urlRedirectController = async (req, res, next) => {
             referer: referer,
         });
 
-        return res.status(200).json({
-            message: "Redirected successfully",
-            result,
-        });
+        return res.redirect(302, result.originalUrl);
 
     } catch (error) {
         return next(error);
