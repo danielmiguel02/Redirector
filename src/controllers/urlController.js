@@ -1,4 +1,4 @@
-import { createUrlService } from '../services/urlService.js';
+import { createUrlService, urlRedirectService } from '../services/urlService.js';
 import { createUrlSchema } from '../validators/urlValidator.js';
 
 const createUrlController = async (req, res, next) => {
@@ -20,4 +20,27 @@ const createUrlController = async (req, res, next) => {
     }
 };
 
-export { createUrlController };
+const urlRedirectController = async (req, res, next) => {
+    try {
+        const ip = req.headers["x-forwarded-for"]?.split(",")[0] ||
+                   req.socket.remoteAddress;
+
+        const userAgent = req.headers["user-agent"];
+
+        const referer = req.headers["referer"] || null;
+
+        const result = await urlRedirectService({
+            code: req.params.code,
+            ip: ip,
+            userAgent: userAgent,
+            referer: referer,
+        });
+
+        return res.redirect(302, result.originalUrl);
+
+    } catch (error) {
+        return next(error);
+    }
+};
+
+export { createUrlController, urlRedirectController };

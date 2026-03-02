@@ -22,4 +22,26 @@ const createUrlRepository = async (data) => {
     }
 };
 
-export { createUrlRepository };
+const urlRedirectRepository = async (data) => {
+    const {ip, userAgent, country, referer, url} = data;
+
+    return await prisma.click.create({
+        data: {
+            ip: ip,
+            userAgent: userAgent,
+            country: country,
+            referer: referer,
+            url: url
+        },
+    });
+};
+
+const findUrlByCode = async (code) => {
+    return await prisma.url.findUnique({
+        where: {
+            code: code,
+        },
+    });
+};
+
+export { createUrlRepository, urlRedirectRepository, findUrlByCode };
