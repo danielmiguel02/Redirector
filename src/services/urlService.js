@@ -1,6 +1,7 @@
 import { generateUrlCode } from '../utils/generateCode.js';
-import { createUrlRepository } from '../repositories/urlRepository.js';
+import { createUrlRepository, findUrlByCode } from '../repositories/urlRepository.js';
 import { ApiError } from '../utils/ApiError.js';
+import { getCountryFromIP } from '../utils/urlUtils.js';
 
 const createUrlService = async ({ url, userId }) => {
     const MAX_RETRIES = 5;
@@ -36,4 +37,38 @@ const createUrlService = async ({ url, userId }) => {
     throw new ApiError(500, 'Failed to generate unique code');
 };
 
-export { createUrlService }
+const urlRedirectService = async ({code, ip, userAgent, referer}) => {
+    if (!code) {
+        throw new ApiError(400, "Code is required")
+    }
+
+    const url = await findUrlByCode(code);
+
+    if (!url) {
+        throw new ApiError(401, "Url doesn't exist with that code");
+    }
+
+    const country = await getCountryFromIP(ip);
+
+    const urlRedirector = await urlRedirectRepository({
+        ip: ip,
+        userAgent: userAgent,
+        country: country,
+        referer: referer,
+        url: { connect: { id: url.id } }
+    });
+
+    return {
+        click: {
+            id: urlRedirector.id,
+            urlId: urlRedirector.urlId,
+            ip: urlRedirector.ip,
+            userAgent: urlRedirector.userAgent,
+            country: urlRedirector.country,
+            referer: urlRedirector.referer,
+        },
+        originalUrl: url.originalUrl,
+    };
+};
+
+export { createUrlService, urlRedirectService }
