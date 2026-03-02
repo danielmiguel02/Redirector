@@ -44,4 +44,15 @@ const findUrlByCode = async (code) => {
     });
 };
 
-export { createUrlRepository, urlRedirectRepository, findUrlByCode };
+const urlClicked = async (id) => {
+    return await prisma.url.update({
+        where: {
+            id,
+        },
+        data: {
+            clickCount: {increment: 1},
+        },
+    });
+};
+
+export { createUrlRepository, urlRedirectRepository, findUrlByCode, urlClicked };
