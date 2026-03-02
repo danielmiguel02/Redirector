@@ -5,6 +5,6 @@ import { createUrlController, urlRedirectController } from '../controllers/urlCo
 const router = express.Router();
 
 router.post("/create", authMiddleware, createUrlController);
-router.post("/:code", urlRedirectController);
+router.get("/:code", urlRedirectController);
 
 export default router;
