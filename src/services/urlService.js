@@ -1,5 +1,5 @@
 import { generateUrlCode } from '../utils/generateCode.js';
-import { createUrlRepository, urlRedirectRepository, findUrlByCode } from '../repositories/urlRepository.js';
+import { createUrlRepository, urlRedirectRepository, findUrlByCode, urlClicked } from '../repositories/urlRepository.js';
 import { ApiError } from '../utils/ApiError.js';
 import { getCountryFromIP } from '../utils/urlUtils.js';
 
@@ -57,6 +57,8 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
         referer: referer,
         url: { connect: { id: url.id } }
     });
+    
+    await urlClicked(); //Increases url clickCount
 
     return {
         click: {
