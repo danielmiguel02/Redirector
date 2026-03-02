@@ -1,4 +1,4 @@
-import { createUrlService } from '../services/urlService.js';
+import { createUrlService, urlRedirectService } from '../services/urlService.js';
 import { createUrlSchema } from '../validators/urlValidator.js';
 
 const createUrlController = async (req, res, next) => {
@@ -20,4 +20,20 @@ const createUrlController = async (req, res, next) => {
     }
 };
 
-export { createUrlController };
+const urlRedirectController = async (req, res, next) => {
+    try {
+        const result = await urlRedirectService({
+            code: req.params.code
+        });
+
+        return res.status(200).json({
+            message: "Redirected successfully",
+            result,
+        });
+
+    } catch (error) {
+        return next(error);
+    }
+};
+
+export { createUrlController, urlRedirectController };
