@@ -1,5 +1,5 @@
 import { generateUrlCode } from '../utils/generateCode.js';
-import { createUrlRepository, findUrlByCode } from '../repositories/urlRepository.js';
+import { createUrlRepository, urlRedirectRepository, findUrlByCode } from '../repositories/urlRepository.js';
 import { ApiError } from '../utils/ApiError.js';
 import { getCountryFromIP } from '../utils/urlUtils.js';
 
