@@ -48,7 +48,7 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
         throw new ApiError(401, "Url doesn't exist with that code");
     }
 
-    const country = await getCountryFromIP(ip);
+    const country = ip ? await getCountryFromIP(ip) : null;
 
     const urlRedirector = await urlRedirectRepository({
         ip: ip,
