@@ -58,7 +58,7 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
         url: { connect: { id: url.id } }
     });
     
-    await urlClicked(); //Increases url clickCount
+    await urlClicked(url.id); //Increases url clickCount
 
     return {
         click: {
