@@ -30,7 +30,6 @@ model Url {
   userId      String?
   code        String      @unique
   originalUrl String
-  isActive    Boolean     @default(true)
   expiresAt   DateTime?
   clickCount  Int         @default(0)
   user        User?       @relation(fields: [userId], references: [id])
