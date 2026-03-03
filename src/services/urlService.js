@@ -49,7 +49,7 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
     }
 
     if (url.expiresAt <= Date.now()) {
-        throw new ApiError("Url expired");
+        throw new ApiError(410, "Url expired");
     }
 
     const country = ip ? await getCountryFromIP(ip) : null;
