@@ -48,7 +48,7 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
         throw new ApiError(401, "Url doesn't exist with that code");
     }
 
-    if (url.expiresAt <= Date.now()) {
+    if (url.expiresAt !== null && url.expiresAt <= Date.now()) {
         throw new ApiError(410, "Url expired");
     }
 
