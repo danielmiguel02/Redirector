@@ -13,7 +13,7 @@ const createUrlService = async ({ url, userId }) => {
             const createdUrl = await createUrlRepository({
                 code: code,
                 originalUrl: url,
-                expiresAt: userId ? null : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                expiresAt: userId ? null : new Date(Date.now() + 1000), //new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                 user: userId ? { connect: { id: userId } } : undefined,
             });
 
@@ -46,6 +46,10 @@ const urlRedirectService = async ({code, ip, userAgent, referer}) => {
 
     if (!url) {
         throw new ApiError(401, "Url doesn't exist with that code");
+    }
+
+    if (url.expiresAt >= Date.now()) {
+        throw new ApiError("Url expired");
     }
 
     const country = ip ? await getCountryFromIP(ip) : null;
