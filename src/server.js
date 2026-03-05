@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 // Import Routes
 import authRoutes from './routes/authRoutes.js';
 import urlRoutes from './routes/urlRoutes.js';
+import analyticsRoutes from './routes/analyticsRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 // API Routes
 app.use("/auth", authRoutes);
 app.use("/url", urlRoutes);
+app.use("/analytics", analyticsRoutes);
 
 // Error Middleware
 app.use(errorMiddleware);
