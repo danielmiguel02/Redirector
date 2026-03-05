@@ -1,11 +1,10 @@
 import { urlUserAnalyticsService } from '../services/analyticsService.js';
 
 const urlUserAnalyticsController = async (req, res, next) => {
-    // User will see originalUrl, clickCount, % of userAgent, % of country, % of referer
     try {
         const result = await urlUserAnalyticsService({
             userId: req.user.id,
-            urlId: req.params.urlId
+            code: req.params.code
         });
     
         return res.status(200).json({
