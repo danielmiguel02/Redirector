@@ -13,22 +13,35 @@ const urlUserAnalyticsService = async ({userId, code}) => {
         throw new ApiError(401, "Not authorized");
     }
 
-    const urlAnalytics = await urlUserAnalyticsRepository ({
-        userId: userId,
-        code: code,
-    });
+    const { urlData, clickData } = await urlUserAnalyticsRepository({ code });
+
+    const totalClicks = clickData.length || 1;
+
+    const computePercentages = (field) => {
+        const counts = {};
+        clickData.forEach((click) => {
+            const value = click[field] || "Unknown";
+            counts[value] = (counts[value] || 0) + 1;
+        });
+
+        const percentages = {};
+        for (const key in counts) {
+            percentages[key] = ((counts[key] / totalClicks) * 100).toFixed(2);
+        }
+        return percentages;
+    };
 
     // User will see originalUrl, clickCount, % of userAgent, % of country, % of referer
     return {
         analytics: {
             url: {
-                originalUrl: urlAnalytics.originalUrl,
-                clickCount: urlAnalytics.clickCount,
+                originalUrl: urlData.originalUrl,
+                clickCount: urlData.clickCount,
             },
             statistics: {
-                userAgent: urlAnalytics.userAgent,
-                country: urlAnalytics.country,
-                referer: urlAnalytics.referer,
+                userAgent: computePercentages("userAgent"),
+                country: computePercentages("country"),
+                referer: computePercentages("referer"),
             },
         },
     };
