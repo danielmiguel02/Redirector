@@ -1,5 +1,6 @@
 import { createUrlService, urlRedirectService } from '../services/urlService.js';
 import { createUrlSchema } from '../validators/urlValidator.js';
+import { rateLimitService } from '../services/rateLimitService.js';
 
 const createUrlController = async (req, res, next) => {
     try {
@@ -9,6 +10,11 @@ const createUrlController = async (req, res, next) => {
             url,
             userId: req.user?.id,
         });
+
+        const ip = req.headers["x-forwarded-for"]?.split(",")[0] ||
+                   req.socket.remoteAddress;
+
+        await rateLimitService(ip);
 
         return res.status(201).json({
             message: "Url created successfully",
