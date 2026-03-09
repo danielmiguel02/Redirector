@@ -1,0 +1,103 @@
+# REDIRECTOR
+
+Redirector is a backend url shortener-style project.
+Supports user authentication, url creation, and url analytics.
+Project is built in Node.js and Express, used Prisma with Neon for database.
+
+## NOTES
+- Make sure .env is setup properly.
+- I set up PORT to be 5000/5001 but it can be changed to any PORT by changing inside .env or server.js.
+- When creating a url if a user is logged-in url will not expire and have analytics, otherwise url expires in 7 days and no analytics.
+- Users can only access url analytics they own.
+
+## Tech Stack
+- Node.js
+- Express.js
+- Prisma
+- Prisma Client
+- dotenv
+- nodemon
+- axios
+- bcryptjs
+- cookie-parser
+- crypto
+- zod
+
+## Features
+- User authentication with JWT
+- Create users
+- Click table within Url table
+- Url table within User table
+- Secure routes with ownership checks
+- Url access counter
+- Url access information like ip, userAgent, country, and referer
+- Unique code generation
+
+
+## API Endpoints
+
+AUTH ROUTES
+METHOD       ROUTES                     DESCRIPTION
+-----------------------------------------------------------------------------
+POST         /auth/register             Registers a user.
+POST         /auth/login                Logs in a user.
+POST         /auth/logout               Logs out a user. (Client-side logout (JWT token removal))
+
+URL ROUTES
+METHOD       ROUTES                     DESCRIPTION
+-----------------------------------------------------------------------------
+POST         /url/create                Creates a url.
+GET          /url/:code                 Access a url with code.
+
+ANALYTICS ROUTES
+METHOD       ROUTES                     DESCRIPTION
+-----------------------------------------------------------------------------
+GET          /analytics/:code           Gets analytics from code.
+
+
+## Project Setup
+
+- Clone the repository
+    git clone https://github.com/danielmiguel02/Redirector.git
+    cd Redirector
+
+- Install Dependencies
+    npm i
+
+- Environment Variables
+    Create a .env file in the root of the project and add the required credentials:
+    DATABASE_URL="" // Inside Neon you will be able to grab the url.
+    PORT=9000 // Or change it to what you would like to be the PORT.
+    NODE_ENV="development"
+    JWT_SECRET="" // node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+    JWT_EXPIRES_IN="7d"
+
+- Running the project
+    npm run dev
+
+- Authorization
+    Authorization: Bearer <your_token_here>
+
+
+## POST Example
+
+AUTH REGISTER (http://localhost:5000/auth/register)
+{
+    "name": "Josh",
+    "email": "emailtoregister@gmail.com",
+    "password": "password123"
+}
+
+AUTH LOGIN (http://localhost:5000/auth/login)
+{
+    "email": "emailtoregister@gmail.com",
+    "password": "password123"
+}
+
+URL CREATE (http://localhost:5000/url/create)
+{
+    "url": "https://www.youtube.com"
+}
+
+Author
+Daniel Miguel
