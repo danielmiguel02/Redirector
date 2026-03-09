@@ -32,6 +32,7 @@ Project is built in Node.js and Express, used Prisma with Neon for database.
 - Url access counter
 - Url access information like ip, userAgent, country, and referer
 - Unique code generation
+- Ip rate limited to create 5 urls per minute
 
 
 ## API Endpoints
