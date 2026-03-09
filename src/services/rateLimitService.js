@@ -16,12 +16,12 @@ const rateLimitService = async (ip) => {
         await createRateLimitRepository({
             ip: ip,
             count: 1,
-            lastHit: now
+            lastHit: new Date(Date.now()),
         });
         return;
     }
 
-    const timeSinceLastHit = now - limit.lastHit;
+    const timeSinceLastHit = now - limit.lastHit.getTime();
 
     if (timeSinceLastHit > WINDOW_TIME) {
         await updateRateLimitRepository({
