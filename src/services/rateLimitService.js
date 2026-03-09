@@ -10,7 +10,6 @@ const rateLimitService = async (ip) => {
     }
 
     const limit = await rateLimitRepository(ip);
-    const now = Date.now();
 
     if (!limit) {
         await createRateLimitRepository({
@@ -21,13 +20,13 @@ const rateLimitService = async (ip) => {
         return;
     }
 
-    const timeSinceLastHit = now - limit.lastHit.getTime();
+    const timeSinceLastHit = Date.now() - limit.lastHit.getTime();
 
     if (timeSinceLastHit > WINDOW_TIME) {
         await updateRateLimitRepository({
             ip: ip,
             count: 1,
-            lastHit: now,
+            lastHit: new Date(Date.now()),
         });
         return;
     }
@@ -39,7 +38,7 @@ const rateLimitService = async (ip) => {
     await updateRateLimitRepository({
         ip: ip,
         count: limit.count + 1,
-        lastHit: now,
+        lastHit: new Date(Date.now()),
     });
 };
 
