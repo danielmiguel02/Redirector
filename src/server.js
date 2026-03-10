@@ -1,6 +1,6 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 import { connectDB, disconnectDB } from './config/db.js';
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
@@ -23,6 +23,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Server static frontend files
+app.use(express.static(path.join(path.resolve(), 'public')));
+
+// Default route: server index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
+});
 
 // API Routes
 app.use("/auth", authRoutes);
