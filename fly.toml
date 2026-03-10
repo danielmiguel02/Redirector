@@ -16,6 +16,9 @@ primary_region = 'iad'
   min_machines_running = 0
   processes = ['app']
 
+[deploy]
+release_command = "npx prisma generate && npx prisma migrate deploy"
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
