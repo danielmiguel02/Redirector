@@ -1,0 +1,9 @@
+# fly.toml - config for Fly.io deployment
+app = "redirector-vm66ea"  # your Fly app name
+
+[build]
+  # default build is using Dockerfile; skip if you don't have a Dockerfile
+
+[deploy]
+  # release command runs migrations on deploy
+  release_command = "npx prisma generate && npx prisma migrate deploy"
