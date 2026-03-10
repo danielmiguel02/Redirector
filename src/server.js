@@ -9,7 +9,12 @@ import authRoutes from './routes/authRoutes.js';
 import urlRoutes from './routes/urlRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 
-dotenv.config();
+// Load .env locally only
+if (process.env.NODE_ENV !== 'production') {
+  // Only load dotenv in development
+  import('dotenv').then(dotenv => dotenv.config());
+}
+
 connectDB();
 
 const app = express();
