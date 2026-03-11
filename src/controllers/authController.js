@@ -32,7 +32,9 @@ const loginUserController = async (req, res, next) => {
 
         const result = await loginUserService(data);
 
-        res.cookie("jwt", result.token, {
+        const token = result.data.token;
+
+        res.cookie("jwt", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
@@ -41,7 +43,7 @@ const loginUserController = async (req, res, next) => {
 
         return res.status(200).json({
             message: "User logged in successfully",
-            user: result,
+            user: result.user.data,
         });
     } catch (error) {
         return next(error);
