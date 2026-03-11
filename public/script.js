@@ -65,7 +65,7 @@ async function createUrl() {
     const data = await res.json();
 
     document.getElementById("shortUrl").innerText =
-        API + "/" + data.url.code;
+        API + "/url/" + data.url.code;
 }
 
 async function getAnalytics() {
