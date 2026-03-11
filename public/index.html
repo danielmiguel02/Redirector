@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Redirector</title>
 </head>
 <body>
-    <h1>Test</h1>
+
+<h1>Redirector</h1>
+
+<h2>Register</h2>
+<input id="registerEmail" placeholder="Email">
+<input id="registerPassword" type="password" placeholder="Password">
+<button onclick="register()">Register</button>
+
+<h2>Login</h2>
+<input id="loginEmail" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<h2>Logout</h2>
+<button onclick="logout()">Logout</button>
+
+<hr>
+
+<h2>Create URL</h2>
+<input id="urlInput" placeholder="https://example.com">
+<button onclick="createUrl()">Create URL</button>
+
+<p id="shortUrl"></p>
+
+<hr>
+
+<h2>Analytics</h2>
+<input id="codeInput" placeholder="Short code">
+<button onclick="getAnalytics()">Get Analytics</button>
+
+<pre id="analyticsResult"></pre>
+
+<script src="script.js"></script>
+
 </body>
 </html>
