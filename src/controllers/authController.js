@@ -32,9 +32,7 @@ const loginUserController = async (req, res, next) => {
 
         const result = await loginUserService(data);
 
-        const token = result.data.token;
-
-        res.cookie("jwt", token, {
+        res.cookie("jwt", result.token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
