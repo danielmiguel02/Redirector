@@ -1,6 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import cors from "cors";
 import { connectDB, disconnectDB } from './config/db.js';
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
@@ -31,6 +32,12 @@ app.use(express.static(path.join(path.resolve(), 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
 });
+
+// Use cors for routes
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 // API Routes
 app.use("/auth", authRoutes);
