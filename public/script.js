@@ -2,6 +2,7 @@ const API = "https://redirector-vm66ea.fly.dev";
 
 async function register() {
 
+    const name = document.getElementById("registerName").value;
     const email = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
 
@@ -10,7 +11,7 @@ async function register() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ name, email, password })
     });
 
     const data = await res.json();
