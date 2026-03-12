@@ -2,13 +2,14 @@
 
 Redirector is a backend url shortener-style project.
 Supports user authentication, url creation, and url analytics.
-Project is built in Node.js and Express, used Prisma with Neon for database.
+Project is built in Node.js and Express, used Prisma with Neon for database and Fly.io for the domain.
 
 ## NOTES
 - Make sure .env is setup properly.
 - I set up PORT to be 5000/5001 but it can be changed to any PORT by changing inside .env or server.js.
 - When creating a url if a user is logged-in url will not expire and have analytics, otherwise url expires in 7 days and no analytics.
 - Users can only access url analytics they own.
+- Domain can be accessed at (https://redirector-vm66ea.fly.dev).
 
 ## Tech Stack
 - Node.js
@@ -22,6 +23,8 @@ Project is built in Node.js and Express, used Prisma with Neon for database.
 - cookie-parser
 - crypto
 - zod
+- path
+- cors
 
 ## Features
 - User authentication with JWT
@@ -82,20 +85,20 @@ GET          /analytics/:code           Gets analytics from code.
 
 ## POST Example
 
-AUTH REGISTER (http://localhost:5000/auth/register)
+AUTH REGISTER (http://localhost:5000/auth/register OR https://redirector-vm66ea.fly.dev/)
 {
     "name": "Josh",
     "email": "emailtoregister@gmail.com",
     "password": "password123"
 }
 
-AUTH LOGIN (http://localhost:5000/auth/login)
+AUTH LOGIN (http://localhost:5000/auth/login OR https://redirector-vm66ea.fly.dev)
 {
     "email": "emailtoregister@gmail.com",
     "password": "password123"
 }
 
-URL CREATE (http://localhost:5000/url/create)
+URL CREATE (http://localhost:5000/url/create OR https://redirector-vm66ea.fly.dev)
 {
     "url": "https://www.youtube.com"
 }
