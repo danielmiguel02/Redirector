@@ -10,7 +10,7 @@ export const errorMiddleware = (err, req, res, next) => {
         });
     }
 
-    if (err.statusCode) {
+    if (err instanceof ApiError) {
         return res.status(err.statusCode).json({
             type: "ApiError",
             message: err.message,
