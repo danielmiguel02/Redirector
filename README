@@ -85,20 +85,20 @@ GET          /analytics/:code           Gets analytics from code.
 
 ## POST Example
 
-AUTH REGISTER (http://localhost:5000/auth/register OR https://redirector-vm66ea.fly.dev/)
+AUTH REGISTER (https://redirector-vm66ea.fly.dev/auth/register)
 {
     "name": "Josh",
     "email": "emailtoregister@gmail.com",
     "password": "password123"
 }
 
-AUTH LOGIN (http://localhost:5000/auth/login OR https://redirector-vm66ea.fly.dev)
+AUTH LOGIN (https://redirector-vm66ea.fly.dev/auth/login)
 {
     "email": "emailtoregister@gmail.com",
     "password": "password123"
 }
 
-URL CREATE (http://localhost:5000/url/create OR https://redirector-vm66ea.fly.dev)
+URL CREATE (https://redirector-vm66ea.fly.dev/url/create)
 {
     "url": "https://www.youtube.com"
 }
