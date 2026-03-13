@@ -1,4 +1,5 @@
 import { ZodError } from "zod";
+import { ApiError } from '../utils/ApiError.js';
 
 export const errorMiddleware = (err, req, res, next) => {
     console.error(err);
