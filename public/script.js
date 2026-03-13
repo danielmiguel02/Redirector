@@ -45,7 +45,18 @@ async function login() {
 
     const data = await res.json();
 
-    alert(data.message);
+    if (!res.ok) {
+        if (data.errors) {
+            const errorMessages = data.errors
+                .map(error => `${error.field}: ${error.message}`)
+                .join(", ");
+            alert(`Validation Error: ${errorMessages}`);
+        } else {
+            alert(`Error: ${data.message || 'An unknown error occurred'}`);
+        }
+    } else {
+        alert(data.message);
+    }
 }
 
 async function logout() {
