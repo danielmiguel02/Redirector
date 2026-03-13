@@ -28,9 +28,21 @@ const registerUserController = async (req, res, next) => {
 
 const loginUserController = async (req, res, next) => {
     try {
-        const data = loginUserSchema.parse(req.body);
+        const parsed = loginUserSchema.safeParse(req.body);
 
-        const result = await loginUserService(data);
+        if (!parsed.success) {
+            const errors = parsed.error.issues.map(issue => ({
+                field: issue.path.join("."),
+                message: issue.message,
+            }));
+
+            return res.status(400).json({ 
+                type: "ValidationError",
+                errors 
+            });
+        }
+
+        const result = await loginUserService(parsed.data);
 
         res.cookie("jwt", result.token, {
             httpOnly: true,
@@ -43,8 +55,9 @@ const loginUserController = async (req, res, next) => {
             message: "User logged in successfully",
             user: result.user.data,
         });
+
     } catch (error) {
-        return next(error);
+        next(error);
     }
 };
 
